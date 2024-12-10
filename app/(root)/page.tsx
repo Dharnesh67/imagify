@@ -1,4 +1,4 @@
-import ModeToggle from "@/components/Toogle";
+// import ModeToggle from "@/components/Toogle";
 import { SignedIn, UserButton } from "@clerk/nextjs";
 export default function Home() {
   return (
@@ -6,7 +6,7 @@ export default function Home() {
       <SignedIn>
         <UserButton />
       </SignedIn>
-      <ModeToggle />
+      {/* <ModeToggle /> */}
     </div>
   );
 }

@@ -17,23 +17,32 @@ using namespace std;
 
 void solve()
 {
-    ll n,m;
-    cin>>n>>m;
-    vll nums(n+1,0);
-    f(i,0,m)
+    vector<vector<string>> v;
+    vector<string> city;
+    int n ;
+    cin >> n;
+    for (int i = 0; i < n; i++)
     {
-        ll l,r,x;
-        cin>>l>>r>>x;
-        l--;
-        r--;
-       nums[l]+=x;
-       nums[r+1]-=x;
+        string s,d;
+        cin >> s>>d;
+        v.push_back({s,d});
+        city.push_back(s);
+        city.push_back(d);
     }
-    f(i,1,n)
+    map<string,int>mp;
+    for(int i=0;i<v.size();i++)
     {
-        nums[i]+=nums[i-1];
+        
+        mp[v[i][0]]++;
     }
-   cout<<*max_element(nums.begin(),nums.end())<<"\n";
+    for(auto x:city){
+        if(mp.find(x)==mp.end())
+        {
+            cout<<x<<endl;
+            break;
+        }
+    }
+    return;
 }
 int main()
 {
@@ -41,8 +50,8 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int t=1;
-    // cin >> t;
+    int t;
+    cin >> t;
     while (t--)
     {
         solve();

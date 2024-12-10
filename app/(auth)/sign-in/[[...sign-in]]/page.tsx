@@ -30,19 +30,10 @@ export default function SignInPage() {
 //   setInterval(fetchImage(), 3000);
   return (
     <>
-      {/* <div className="h-screen w-screen flex justify-center items-center relative">
-        {image && (
-          <Image
-            src={image}
-            layout="fill"
-            objectFit="cover"
-            alt="background"
-            className="absolute top-0 left-0 w-full h-full z-[-1]"
-          />
-        )} */}
-        {/* <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50" /> */}
-      {/* </div> */}
+      <div className="h-screen w-screen flex justify-center items-center relative  bg-gradient-to-tr from-purple-200 to-purple-800 ">
         <SignIn />
+      </div>
     </>
   );
 }
+ 
