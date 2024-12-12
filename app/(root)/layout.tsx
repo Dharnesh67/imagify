@@ -1,19 +1,19 @@
 import React from "react";
 // import { Button } from "@/components/ui/button";
-import {SignedIn, } from "@clerk/nextjs";
-import SideNav  from "@/components/shared/SideNav";
+// import { SignedIn, UserButton } from "@clerk/nextjs";
+import SideNav from "@/components/shared/SideNav";
 import MobileNav from "@/components/shared/MobileNav";
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <main className="root">
-      <SideNav/>
-      <MobileNav/>
+      <SideNav />
+      <MobileNav />
       <div className="root-container">
         <div className="wrapper">
-          
-          <SignedIn>
-          </SignedIn>
-            {children}
+          {/* <SignedIn>
+            <UserButton />
+          </SignedIn> */}
+          {children}
         </div>
       </div>
     </main>
