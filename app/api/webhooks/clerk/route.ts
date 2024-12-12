@@ -4,10 +4,10 @@ import { WebhookEvent } from "@clerk/nextjs/server";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { Webhook } from "svix";
-
 import { createUser, deleteUser, updateUser } from "@/lib/actions/user.actions";
 
 export async function POST(req: Request) {
+  console.log("Webhook received");
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the webhook
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
 
@@ -66,21 +66,33 @@ export async function POST(req: Request) {
       clerkId: id,
       email: email_addresses[0].email_address,
       username: username!,
-      firstName: first_name,
-      lastName: last_name,
+      firstName: (first_name===null) ? "" : first_name,
+      lastName: (last_name===null) ? "" : last_name,
       photo: image_url,
     };
 
     const newUser = await createUser(user);
-
+    console.log(clerkClient);
     // Set public metadata
     if (newUser) {
-      await clerkClient.users.updateUserMetadata(id, {
+      type ClerkClientWithUsers = typeof clerkClient & {
+        users: {
+          updateUserMetadata: (
+            userId: string,
+            metadata: { publicMetadata: Record<string, any> }
+          ) => Promise<void>;
+        };
+      };
+      
+      const enhancedClerkClient = clerkClient as ClerkClientWithUsers;
+      // Ensure correct method to update metadata
+      await enhancedClerkClient.users.updateUserMetadata(id, {
         publicMetadata: {
           userId: newUser._id,
         },
       });
     }
+    
 
     return NextResponse.json({ message: "OK", user: newUser });
   }
@@ -90,8 +102,8 @@ export async function POST(req: Request) {
     const { id, image_url, first_name, last_name, username } = evt.data;
 
     const user = {
-      firstName: first_name,
-      lastName: last_name,
+      firstName: (first_name===null) ? "" : first_name,
+      lastName: (last_name===null) ? "" : last_name,
       username: username!,
       photo: image_url,
     };
